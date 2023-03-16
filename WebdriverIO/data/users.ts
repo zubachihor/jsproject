@@ -18,6 +18,11 @@ class Users {
     username: "performance_glitch_user",
     password: "secret_sauce"
   };
+  
+  readonly incorectUser = {
+    username: "user_standard",
+    password: "incorect"
+  };
 
 }
 

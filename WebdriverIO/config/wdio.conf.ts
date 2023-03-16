@@ -118,9 +118,9 @@ export const config: WebdriverIO.Config = {
      * Function to be executed after a test (in Mocha/Jasmine).
      */
     afterTest: async function (test, context, { error, result, duration, passed, retries }) {
-        //if (!passed) {
+        if (!passed) {
             await browser.takeScreenshot();
-        //}
+        }
     },
 
     /**

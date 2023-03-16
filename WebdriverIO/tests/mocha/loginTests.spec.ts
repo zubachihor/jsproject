@@ -1,37 +1,42 @@
-import {LoginPage} from "../../pages/login.page";
-import {ProductsPage} from "../../pages/products.page";
+import loginPage from "../../pages/login.page";
+import productsPage from "../../pages/products.page";
 import users from "../../data/users";
+import utility from "utils/utility";
 
-describe('Login to the application', () => {
-const loginPage = new LoginPage();
+describe("Login to the application", () => {
+  beforeEach(async () => {
+    await loginPage.openApp();
+    await loginPage.waitForPageToBeLoaded();
+    await loginPage.waitForSeconds(3);
+  });
 
-    beforeEach(async () => {
-        await loginPage.openApp();
-        await loginPage.waitForPageToBeLoaded();
-        await loginPage.waitForSeconds(3);
+  it("Verify a user can login to the application", async () => {
+    await loginPage.login(users.standardUser);
+    await loginPage.waitForSeconds(3);
+
+    productsPage.productsLabel().then((label) => {
+      expect(label.getText()).toEqual("Products");
     });
 
-    it('Verify a user can login to the application', async () => {
-        await loginPage.login(users.standardUser);
+    it("Verify error message when locked user try to login", async () => {
+      await loginPage.login(users.lockedOutUser);
+      await loginPage.waitForSeconds(3);
+
+      loginPage.errorMessage().then((message) => {
+        expect(message.getText()).toEqual(
+          "Epic sadface: Sorry, this user has been locked out."
+        );
+      });
+
+      it("Verify error message when non registered user try to login", async () => {
+        await loginPage.puttingIncorectCredential(
+          await utility.generateRandomString(10),
+          await utility.generateRandomNumericString(8)
+        );
         await loginPage.waitForSeconds(3);
 
-        const productsPage = new ProductsPage();
-        let label = productsPage.productsLabel().getText();
-        let logoLabel = productsPage.logoLabel().getText();
-        expect(label).toEqual(logoLabel);
-
-        productsPage.productsLabel().then(label => {
-            expect(label.getText()).toEqual("Products");
-        })
-
-        productsPage.productsLabel().then(label => {
-            productsPage.logoLabel().then(logoLabel => {
-                console.log(label.getText());
-                console.log(logoLabel.getText());
-                expect(label.getText()).toEqual(logoLabel.getText());
-            })
-        });
-
+        expect(await loginPage.isErrorMessageDisplayed());
+      });
     });
-
+  });
 });
