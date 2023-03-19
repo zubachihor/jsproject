@@ -1,13 +1,17 @@
 import {describe, expect} from "@jest/globals"
 import apiUsersController from "../../api/apiUsersController";
-
+import {validate} from "jsonschema";
+import addUserSchema from "../../api/jsonSchemas/addUserSchema.json"
+import getUserSchema from "../../api/jsonSchemas/getUserSchema.json"
+import editUserSchema from "../../api/jsonSchemas/editUserSchema.json"
 
 describe("Users API tests", () => {
 
     it("should return all users", async () => {
-        const response = await apiUsersController.getAllUsers();
+        let response = await apiUsersController.getAllUsers();
         console.log(response);
         expect(response.statusCode).toEqual(200);
+        expect(validate(response.data, getUserSchema).valid).toBeTruthy();
     });
     
     it("should add a new user", async () => {
@@ -22,6 +26,7 @@ describe("Users API tests", () => {
         expect(response.body.name).toEqual(user.name);
         expect(response.body.username).toEqual(user.username);
         expect(response.body.email).toEqual(user.email);
+        expect(validate(response.data, editUserSchema).valid).toBeTruthy();
     });
 
     it("should edit an existing user", async () => {
@@ -34,6 +39,7 @@ describe("Users API tests", () => {
         expect(response.statusCode).toEqual(200); // OK
         expect(response.body.name).toEqual(user.name);
         expect(response.body.email).toEqual(user.email);
+        expect(validate(response.data, addUserSchema).valid).toBeTruthy();
     });
 
     it("should delete an existing user", async () => {
