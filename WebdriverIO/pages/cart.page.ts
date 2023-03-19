@@ -14,7 +14,7 @@ export class CartPage extends BasePage {
   }
 
   private checkoutButton() {
-    return $("#checkout");
+    return $("//button [@class ='btn btn_action btn_medium checkout_button']");
   }
 
 

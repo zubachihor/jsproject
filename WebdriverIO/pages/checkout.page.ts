@@ -29,7 +29,7 @@ export class ChekoutPage extends BasePage {
         await this.firstNameInputField().setValue(client.firstName);
         await this.lastNameInputField().setValue(client.lastName);
         await this.zipCodeInputField().setValue(client.zipCode);
-        await this.continueButton().click;
+        this.continueButton().click;
  
 }
 }

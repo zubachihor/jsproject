@@ -8,10 +8,13 @@
     "test": "wdio run ./config/wdio.conf.ts",
     "report:mocha": "marge ./reports/mocha/wdio-ma-merged.json --reportTitle 'WebAppMochaReport' && move mochawesome-report.html ./mochawesome-report",
     "test:cucumber": "wdio run ./config/wdio.conf.cucumber.ts",
-    "report:cucumber": "ts-node ./generator/index.ts"
+    "report:cucumber": "ts-node ./generator/index.ts",
+    "test:jest": "jest"
   },
-
   "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-typescript": "^7.21.0",
     "@wdio/cli": "^7.19.7",
     "@wdio/cucumber-framework": "^7.19.7",
     "@wdio/junit-reporter": "^7.19.7",
@@ -19,8 +22,17 @@
     "@wdio/mocha-framework": "^7.19.7",
     "@wdio/selenium-standalone-service": "^7.19.5",
     "@wdio/spec-reporter": "^7.19.7",
+    "axios": "^1.3.4",
+    "babel-jest": "^29.5.0",
     "cucumber-html-reporter": "^5.5.0",
+    "jest": "^27.5.1",
+    "jest-html-reporter": "^3.4.2",
+    "jsonschema": "^1.4.0",
     "mochawesome-report-generator": "^3.1.5",
+    "npm-run-all": "^4.1.5",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "ts-jest": "^27.1.5",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^4.0.0",
     "typescript": "^4.6.4",
